@@ -1,0 +1,5 @@
+parameters:
+  model: "mnasnet"
+  epochs: 200
+  lr: 0.001
+
