@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 
-class Model(nn.Module):
-    def __init__(self,*args,**kwargs):
-        super(Model,self).__init__()
-
+class MnasNet(nn.Module):
+    def __init__(self,**kwargs):
+        super(MnasNet,self).__init__()
+        pass 
 
     def forward(self,x):
         out=x
