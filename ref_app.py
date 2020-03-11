@@ -28,6 +28,7 @@ def main(cfg):
     app=MnasNet_official(cfg.parameters)
     app.build()
     app.train()
+    app.test()
 
 if __name__=="__main__":
     main()
