@@ -19,7 +19,7 @@ class Application:
     def __init__(self, cfg):
         self.cfg = cfg
         self.dataset = getattr(datasets,cfg.dataset.upper())
-        self.data_dir = os.path.join(utils.get_original_cwd(),"./data") 
+        self.data_dir = os.path.join(utils.get_original_cwd(),"data") 
         self.device = ("cuda:0" if torch.cuda.is_available() else "cpu")
         print(f"Device: {self.device}")
 
