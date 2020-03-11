@@ -129,7 +129,6 @@ class Application:
                 _, predicted = torch.max(outputs, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
-                print(correct / total)
         self.net.train()
         acc = correct / total
         batch_loss = total_loss / len(self.valid_data)
