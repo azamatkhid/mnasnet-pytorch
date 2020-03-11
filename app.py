@@ -58,7 +58,7 @@ class Application:
         self._check_dirs()
         self._load_data("train")
         
-        self.write = SummaryWriter(log_dir = self.cfg.log_dir)
+        self.writer = SummaryWriter(log_dir = self.cfg.log_dir)
         self.criterion = criterion()
         self.optimizer = optimizer(self.net.parameters(), lr = self.cfg.lr,
                 momentum = self.cfg.momentum, weight_decay = self.cfg.weight_decay)
