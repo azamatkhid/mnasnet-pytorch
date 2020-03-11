@@ -69,7 +69,7 @@ class Application:
         for epch in range(self.cfg.epochs):
             running_loss = 0.
             epch_loss = 0.
-
+            
             for idx, batch in enumerate(self.train_data, start = 0):
                 inputs, labels = batch[0].to(self.device), batch[1].to(self.device)
                 self.optimizer.zero_grad()
@@ -83,8 +83,8 @@ class Application:
                 if idx % self.cfg.verbose_step == self.cfg.verbose_step - 1:
                     valid_acc, valid_loss = self._validation()
                     self.writer.add_scalar("Loss/Train", running_loss/self.cfg.verbose_step, iteration)
-                    self.writer.add_scalar("Loss/Validation", valod_loss, iteration)
-                    self.writer.add_scalar("Acc/Validation", valod_acc, iteration)
+                    self.writer.add_scalar("Loss/Validation", valid_loss, iteration)
+                    self.writer.add_scalar("Acc/Validation", valid_acc, iteration)
                     self.writer.add_scalar("LearningRate", self.scheduler.get_lr()[0], iteration)
                     print(f"{epch} Loss/train: {running_loss/self.cfg.verbose_step}, Loss/val: {valid_loss}, ", 
                             f"Acc/val: {valid_acc}, lr: {self.scheduler.get_lr()[0]}")
