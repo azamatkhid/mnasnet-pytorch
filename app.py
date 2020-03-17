@@ -53,7 +53,7 @@ class Application:
         '''
         pass
 
-    def train(self, criterion = nn.CrossEntropyLoss, optimizer = torch.optim.SGD):
+    def train(self, criterion = nn.CrossEntropyLoss, optimizer = torch.optim.RMSprop):
         self.net.train()
         self._check_dirs()
         self._load_data("train")
