@@ -14,7 +14,7 @@ parameters:
   weight_decay: 0.0001
   log_dir: "./tboard"
   ckpts_dir: "./ckpts"
-  num_classes: 10
+  num_classes: 1000
   model: "mnasnet1_0"
   dataset: "cifar10"
   
