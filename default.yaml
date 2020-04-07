@@ -15,6 +15,7 @@ parameters:
   log_dir: "./tboard"
   ckpts_dir: "./ckpts"
   num_classes: 1000
-  model: "mnasnet1_0"
+  model: "mnasnet-a1"
   dataset: "cifar10"
+  dropout: 0.2
   

@@ -11,7 +11,8 @@ class MnasNet_official(Application):
         pass
 
     def build(self):
-        model = getattr(models, self.cfg.model)
+        if self.cfg.model=="mnasnet-b1":
+            model = getattr(models, "mnasnet1_0")
         self.net = model(pretrained = False, num_classes = self.cfg.num_classes)
 
         if torch.cuda.device_count() > 1:

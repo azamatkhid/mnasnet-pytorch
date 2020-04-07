@@ -39,9 +39,7 @@ class Application:
         self.net = None
         
     def build(self):
-        '''
-        this is for inhouse model implementations
-        self.net = MnasNet()
+        self.net = MnasNet(3, num_classes=self.cfg.num_classes, model=self.cfg.model, p=self.cfg.dropout, training=True)
 
         if torch.cuda.device_count() > 1:
             self.net = nn.DataParallel(self.net)
@@ -50,7 +48,6 @@ class Application:
         self.net.to(self.device)
         if self.cfg.verbose and torch.cuda.device_count() <= 1:
             summary(self.net, (3, 224, 224))
-        '''
         pass
 
     def train(self, criterion = nn.CrossEntropyLoss, optimizer = torch.optim.RMSprop):
