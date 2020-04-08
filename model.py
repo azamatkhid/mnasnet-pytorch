@@ -2,25 +2,6 @@ import torch
 import torch.nn as nn
 from torchsummary import summary
 
-class SepConv(nn.Module):
-    def __init__(self, inchannel, outchannel):
-        super(SepConv, self).__init__()
-        self.conv0 = nn.Conv2d(inchannel, inchannel, kernel_size=3, stride=1, 
-                padding=1, bias=False, groups=inchannel)
-        self.bn0 = nn.BatchNorm2d(inchannel)
-        self.act0 = nn.ReLU(inplace=True)
-
-        self.conv1 = nn.Conv2d(inchannel, outchannel, kernel_size=1, stride=1,
-                padding=0, bias=False)
-        self.bn1 = nn.BatchNorm2d(outchannel)
-
-    def forward(self, x):
-        out = self.conv0(x)
-        out = self.act0(self.bn0(out))
-        out = self.conv1(out)
-        out = self.bn1(out)
-        return out
-
 class _InvertedResidual(nn.Module):
     def __init__(self, inchannel, outchannel, kernel_size, stride=1, exp_size=1, se=False, se_ratio=0.25):
         super(_InvertedResidual, self).__init__()

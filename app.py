@@ -23,18 +23,18 @@ class Application:
         self.device = ("cuda:0" if torch.cuda.is_available() else "cpu")
         print(f"Device: {self.device}")
 
-        self.train_transforms = transforms.Compose([transforms.Resize((224, 224), interpolation = 2),
+        self.train_transforms = transforms.Compose([transforms.Resize((224, 224), interpolation=2),
             transforms.Pad(4),
-            transforms.RandomHorizontalFlip(p = 0.5),
-            transforms.RandomCrop((224,224)),
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomCrop((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean = [0.5, 0.5, 0.5],
                 std = [0.5, 0.5, 0.5])])
 
-        self.test_transforms = transforms.Compose([transforms.Resize((224, 224), interpolation = 2),
+        self.test_transforms = transforms.Compose([transforms.Resize((224, 224), interpolation=2),
             transforms.ToTensor(),
-            transforms.Normalize(mean = [0.5, 0.5, 0.5],
-                std = [0.5, 0.5, 0.5])])
+            transforms.Normalize(mean=[0.5, 0.5, 0.5],
+                std=[0.5, 0.5, 0.5])])
 
         self.net = None
         
@@ -50,24 +50,24 @@ class Application:
             summary(self.net, (3, 224, 224))
         pass
 
-    def train(self, criterion = nn.CrossEntropyLoss, optimizer = torch.optim.RMSprop):
+    def train(self, criterion=nn.CrossEntropyLoss, optimizer=torch.optim.RMSprop):
         self.net.train()
         self._check_dirs()
         self._load_data("train")
         
-        self.writer = SummaryWriter(log_dir = self.cfg.log_dir)
+        self.writer = SummaryWriter(log_dir=self.cfg.log_dir)
         self.criterion = criterion()
-        self.optimizer = optimizer(self.net.parameters(), lr = self.cfg.lr,
-                momentum = self.cfg.momentum, weight_decay = self.cfg.weight_decay)
+        self.optimizer = optimizer(self.net.parameters(), lr=self.cfg.lr,
+                momentum=self.cfg.momentum, weight_decay=self.cfg.weight_decay)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer,
-                step_size = self.cfg.lr_step, gamma = self.cfg.lr_gamma)
+                step_size=self.cfg.lr_step, gamma=self.cfg.lr_gamma)
 
         iteration = 1
         for epch in range(self.cfg.epochs):
             running_loss = 0.
             epch_loss = 0.
             
-            for idx, batch in enumerate(self.train_data, start = 0):
+            for idx, batch in enumerate(self.train_data, start=0):
                 inputs, labels = batch[0].to(self.device), batch[1].to(self.device)
                 self.optimizer.zero_grad()
                 outputs = self.net(inputs)
@@ -142,31 +142,31 @@ class Application:
     def _load_data(self, *args):
         if args[0] == "train":
             data = self.dataset(root = self.data_dir, 
-                    train = True, download = True, transform = self.train_transforms)
+                    train=True, download=True, transform=self.train_transforms)
             data_size = len(data)
             indices = list(range(data_size))
             valid_ratio = 0.1
-            split = int(np.floor(valid_ratio * data_size))
+            split = int(np.floor(valid_ratio*data_size))
             train_idx, valid_idx = indices[split:], indices[:split]
             train_sampler = SubsetRandomSampler(train_idx)
             valid_sampler = SubsetRandomSampler(valid_idx)
 
             self.train_data = torch.utils.data.DataLoader(data,
-                    batch_size = self.cfg.batch_size,
-                    sampler = train_sampler,
-                    num_workers = 1)
+                    batch_size=self.cfg.batch_size,
+                    sampler=train_sampler,
+                    num_workers=1)
 
             self.valid_data = torch.utils.data.DataLoader(data,
-                    batch_size = self.cfg.batch_size,
-                    sampler = train_sampler,
-                    num_workers = 1)
+                    batch_size=self.cfg.batch_size,
+                    sampler=train_sampler,
+                    num_workers=1)
         elif args[0] == "test":
-            data = self.dataset(root = self.data_dir,
-                    train = False, download = True, transform = self.test_transforms)
+            data = self.dataset(root=self.data_dir,
+                    train=False, download=True, transform=self.test_transforms)
             self.test_data = torch.utils.data.DataLoader(data,
-                    batch_size = self.cfg.batch_size,
-                    shuffle = False,
-                    num_workers = 1)
+                    batch_size=self.cfg.batch_size,
+                    shuffle=False,
+                    num_workers=1)
 
 @hydra.main(config_path="./default.yaml")
 def main(cfg):
