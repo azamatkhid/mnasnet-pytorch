@@ -90,7 +90,7 @@ class Application:
 
             self.scheduler.step()
 
-        torch.save(self.net.state_dict(),os.path.joing(self.cfg.ckpts_dir,"model.pth"))
+        torch.save(self.net.state_dict(),os.path.join(self.cfg.ckpts_dir,"model.pth"))
 
     def test(self):
         self.net.eval()
