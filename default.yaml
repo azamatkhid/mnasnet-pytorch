@@ -7,14 +7,14 @@ parameters:
   batch_size: 128
   verbose_step: 100
   verbose: True
-  momentum: 0.9
-  lr: 0.1
-  lr_step: 80
+  momentum: 0.01
+  lr: 0.01
+  lr_step: 50
   lr_gamma: 0.1
   weight_decay: 0.0001
   log_dir: "./tboard"
   ckpts_dir: "./ckpts"
-  num_classes: 1000
+  num_classes: 10
   model: "mnasnet-a1"
   dataset: "cifar10"
   dropout: 0.2
