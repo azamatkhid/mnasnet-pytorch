@@ -41,8 +41,9 @@ class Application:
     def build(self):
         self.net = MnasNet(3, num_classes=self.cfg.num_classes, model=self.cfg.model, p=self.cfg.dropout, training=True)
 
+        self.net = nn.DataParallel(self.net)
+        
         if torch.cuda.device_count() > 1:
-            self.net = nn.DataParallel(self.net)
             print(f"Number of GPUs : {torch.cuda.device_count()}")
 
         self.net.to(self.device)
