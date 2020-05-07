@@ -20,7 +20,7 @@ class Application:
         self.cfg = cfg
         self.dataset = getattr(datasets,cfg.dataset.upper())
         self.data_dir = os.path.join(utils.get_original_cwd(),"data") 
-        self.device = ("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = ("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Device: {self.device}")
 
         self.train_transforms = transforms.Compose([transforms.Resize((224, 224), interpolation=2),
