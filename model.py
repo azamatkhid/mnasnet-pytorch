@@ -45,19 +45,19 @@ class _InvertedResidual(nn.Module):
         return out
 
 class MnasNet(nn.Module):
-    def __init__(self, inchannel, num_classes=1000, model="mnasnet-b1", p=0.2, training=True):
+    def __init__(self, inchannel, cfg, training=True):
         super(MnasNet,self).__init__()
-        self.p = p
+        self.p = cfg.dropout
         self.training = training
 
-        if model == "mnasnet-a1":
+        if cfg.model == "mnasnet-a1":
             self._mnasnet_a1(inchannel)
             self.model = nn.Sequential(*self.blocks)
-            self.logits = nn.Linear(320, num_classes)
-        elif model == "mnasnet-b1":
+            self.logits = nn.Linear(320, cfg.num_classes)
+        elif cfg.model == "mnasnet-b1":
             self._mnasnet_b1(inchannel)
             self.model = nn.Sequential(*self.blocks)
-            self.logits = nn.Linear(1280, num_classes)
+            self.logits = nn.Linear(1280, cfg.num_classes)
         
         pass
 

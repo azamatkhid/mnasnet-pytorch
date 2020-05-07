@@ -39,7 +39,7 @@ class Application:
         self.net = None
         
     def build(self):
-        self.net = MnasNet(3, num_classes=self.cfg.num_classes, model=self.cfg.model, p=self.cfg.dropout, training=True)
+        self.net = MnasNet(3, self.cfg, training=True)
 
         self.net = nn.DataParallel(self.net)
         
