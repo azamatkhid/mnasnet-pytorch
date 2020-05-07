@@ -15,7 +15,7 @@ class MnasNet_official(Application):
             model = getattr(models, "mnasnet1_0")
         self.net = model(pretrained = False, num_classes = self.cfg.num_classes)
 
-        self.net = nn.DataParallel(self.net)
+        self.net = torch.nn.DataParallel(self.net)
         
         if torch.cuda.device_count() > 1:
             print(f"Number of GPUs: {torch.cuda.device_count()}")
