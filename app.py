@@ -131,7 +131,6 @@ class Application:
         batch_loss = total_loss / len(self.valid_data)
         return acc, batch_loss
 
-        pass
 
     def _save_ckpts(self, step, epoch, filename):
         state = {"network": self.net.state_dict(),
